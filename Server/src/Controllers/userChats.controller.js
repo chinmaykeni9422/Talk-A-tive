@@ -1,8 +1,13 @@
 import chats from "../data/data.js"
 
 // controllers 
-const getChats = () => {
+const getChats = (req, res) => {
     res.send(chats) ;
 }
 
-export {getChats} ;
+const getSingleChat = (req, res) => {
+    const singleChat = chats.find((c) => c._id === req.params.id) ;
+    res.send(singleChat) ;
+}
+
+export {getChats, getSingleChat} ;
