@@ -1,11 +1,13 @@
 import axios from "axios" ;
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Chat() {
 
+  const [chats, setChats] = useState([])
+
   const Chat = async () => {
     const {data} = await axios.get("/api/v1/users/chats");
-    console.log(data) ;
+    setChats(data) ;
   }
 
   useEffect(() => {
@@ -14,9 +16,13 @@ function Chat() {
 
   return (
     <>
-      <div>{}</div>
+      <div>
+        {chats.map((item) => (
+          <div key={item._id}>{item.chatName}</div>
+        ))}
+      </div>
     </>
-  )
+  );
 }
 
 export default Chat
