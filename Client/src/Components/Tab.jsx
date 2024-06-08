@@ -1,4 +1,6 @@
 import React from "react";
+import Login from "./Login";
+import Signup from "./Signup";
 
 const Tabs = () => {
 
@@ -6,8 +8,8 @@ const Tabs = () => {
   
   return (
     <>
-      <div className="flex flex-wrap">
-        <div className="w-full p-4">
+      <div className="flex w-[700px] flex-wrap">
+        <div className="w-full p-2">
           <ul
             className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
             role="tablist"
@@ -49,11 +51,11 @@ const Tabs = () => {
             <div className="px-4 py-5 flex-auto">
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"}>
-                  <h4>hii</h4>
+                  <Login />
                 </div>
 
                 <div className={openTab === 2 ? "block" : "hidden"}>
-                  <h4>heyy</h4>
+                  <Signup f />
                 </div>
               </div>
             </div>
