@@ -1,10 +1,11 @@
 import {Router} from "express" ;
-import {getChats, getSingleChat} from "../Controllers/userChats.controller.js"
+import { signUpUser, logInUser } from "../Controllers/user.controller/js";
+
 
 const router = Router() ;
 
-router.route("/chats").get(getChats)
+router.route("/").post(signUpUser) ;
 
-router.route("/chats/:id").get(getSingleChat);
+router.route("/login").post(logInUser) ;
 
 export default router ;

@@ -9,6 +9,15 @@ app.use(
   })
 );
 
+// to accept the json file
+app.use(express.json())
+
+// to decode the encoded value in url
+app.use(express.urlencoded()) ;
+
+// to store file temporarely in local environment
+app.use(express.static("public")) ;
+
 //routes imports
 import userRouter from "./Routes/user.routes.js";
 
