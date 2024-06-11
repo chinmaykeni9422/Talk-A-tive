@@ -1,13 +1,14 @@
 import asyncHandler from "express-async-handler";
 import User from "../Models/User.model.js";
 import {uploadOnCloudinary} from "../Utils/cloudnary.js"
+import generateToken from "../config/GenerateToken.js";
 
-const signUpUser = asyncHandler(async (req, res) => {
+const signUpUser = asyncHandler(async (req, res) => { 
   //get user details from client
-  const { Name, Email, password, confirmPassword } = req.body;
+  const { name, email, password, confirmPassword } = req.body;
 
   //validation - noot empty
-  if (!Name || !Email || !password || !confirmPassword) {
+  if (!name || !email || !password || !confirmPassword) {
     res.status(400);
     throw new Error("Please enter all the feilds");
   }
@@ -19,35 +20,36 @@ const signUpUser = asyncHandler(async (req, res) => {
   }
 
   // check if user already exits
-  const userExists = await User.findOne({ Email });
+  const userExists = await User.findOne({ email });
   if (userExists) {
     res.status(409);
     throw new Error("User already exists");
   }
 
   // handle image files
-  const imageLocalPath = req.files?.image[0]?.path;
+  const imageLocalPath = req.files?.pic[0]?.path;
   // if(!imageLocalPath){
   //   res.status(400);
   //   throw new Error("image file is required");
   // }
-  const image = await uploadOnCloudinary(imageLocalPath);
+  const pic = await uploadOnCloudinary(imageLocalPath);
 
   // create user object - create entry in db
   const user = await User.create({
-    Name,
-    Email,
+    name,
+    email,
     password,
-    image : image.url
-  }) ;
+    pic: pic.url,
+  }); ;
 
   // send response to front end
   if (user) {
     res.status(201).json({
       _id: user._id,
-      Name: user.Name,
-      Email: user.Email,
-      Image: user.Image,
+      name: user.name,
+      email: user.email,
+      pic: user.pic,
+      token: generateToken(user._id)
     });
   } else {
     res.status(400);
@@ -55,6 +57,23 @@ const signUpUser = asyncHandler(async (req, res) => {
   }
 });
 
-const logInUser = () => {};
+const logInUser = asyncHandler( async (req, res) => {
+  const {email, password} = req.body ;
+
+  const user = await User.findOne({email}) ;
+
+  if (user && (await user.isPasswordCorrect(password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid Email or Password");
+  }
+});
 
 export { signUpUser, logInUser };
