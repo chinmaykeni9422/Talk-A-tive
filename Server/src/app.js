@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors" ;
+import {notFound, errorHandler} from "./Middlewares/ErrorMiddleware.js"
 
 const app = express();
 
@@ -17,6 +18,10 @@ app.use(express.urlencoded()) ;
 
 // to store file temporarely in local environment
 app.use(express.static("public")) ;
+
+// error handlings
+app.use(notFound) ;
+app.use(errorHandler) ;
 
 //routes imports
 import userRouter from "./Routes/user.routes.js";
