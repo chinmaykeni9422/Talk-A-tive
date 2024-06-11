@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-
+import axios from "axios"
 
 function Signup() {
 
     const [user, setUser] = useState({
-        Name : "" ,
-        Email: "" ,
-        password: "" ,
-        confirmPassword: "",
-        image: ""
-    }) ;
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      pic: "",
+    }); ;
 
     let name, value ;
 
@@ -20,8 +20,8 @@ function Signup() {
         setUser({... user, [name]: value}) ;
     }
 
-    const postData = () => {
-
+    const postData = async () => {
+      
     }
 
   return (
@@ -29,7 +29,7 @@ function Signup() {
       <form method="POST" className="space-y-4 md:space-y-6">
         <div className="flex flex-col items-start">
           <label
-            htmlFor="Name"
+            htmlFor="name"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Name :
@@ -37,8 +37,8 @@ function Signup() {
           <input
             type="text"
             onChange={handleInput}
-            value={user.Name}
-            name="Name"
+            value={user.name}
+            name="name"
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Enter your name"
             required=""
@@ -47,7 +47,7 @@ function Signup() {
 
         <div className="flex flex-col items-start">
           <label
-            htmlFor="Email"
+            htmlFor="email"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Email :
@@ -55,8 +55,8 @@ function Signup() {
           <input
             type="email"
             onChange={handleInput}
-            value={user.Email}
-            name="Email"
+            value={user.email}
+            name="email"
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Enter your email"
             required=""
@@ -73,7 +73,7 @@ function Signup() {
           <input
             type="password"
             onChange={handleInput}
-            value={user.userName}
+            value={user.password}
             name="password"
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Enter your password"
@@ -101,7 +101,7 @@ function Signup() {
 
         <div className="flex flex-col items-start">
           <label
-            htmlFor="image"
+            htmlFor="pic"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Upload Your Image :
@@ -109,8 +109,8 @@ function Signup() {
           <input
             type="file"
             onChange={handleInput}
-            value={user.image}
-            name="image"
+            value={user.pic}
+            name="pic"
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required=""
           />
