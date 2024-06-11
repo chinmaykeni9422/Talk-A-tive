@@ -1,5 +1,5 @@
 import {Router} from "express" ;
-import { signUpUser, logInUser } from "../Controllers/user.controller/js";
+import { signUpUser, logInUser } from "../Controllers/user.controller.js";
 import { upload } from "../Middlewares/multer.middleware.js";
 
 
@@ -8,7 +8,7 @@ const router = Router() ;
 router.route("/").post(
     upload.fields([
         {
-            name: "image",
+            name: "pic",
             maxCount: 1
         }
     ]) ,
