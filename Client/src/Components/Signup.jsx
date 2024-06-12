@@ -1,46 +1,44 @@
-import React, { useState } from 'react'
-import axios from "axios"
+import React, { useState } from "react";
+import axios from "axios";
 
 function Signup() {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    pic: "",
+  });
 
-    const [user, setUser] = useState({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      pic: "",
-    }); ;
+  let name, value;
 
-    let name, value ;
+  const handleInput = (event) => {
+    name = event.target.name;
+    value = event.target.value;
 
-    const handleInput = (event) =>{
-        name = event.target.name ;
-        value = event.target.value ;
+    setUser({ ...user, [name]: value });
+  };
 
-        setUser({... user, [name]: value}) ;
-    }
+  const postData = async (event) => {
+    event.preventDefault();
+    const { name, email, password, confirmPassword, pic } = user;
 
-    const postData = async (event) => {
-      event.preventDefault() ;
-
-      const {name, email, password, confirmPassword, pic} = user ;
-
-      axios
-        .post("/api/v1/users/", {
-          name,
-          email,
-          password,
-          confirmPassword,
-          pic
-        })
-        .then((response) => {
-          const data = response.data ;
-          alert(data.message) ;
-        })
-        .catch((error) => {
-          window.alert(error.message)
-        });
-    }
+    axios
+      .post("/api/v1/users/", {
+        name,
+        email,
+        password,
+        confirmPassword,
+        pic,
+      })
+      .then((response) => {
+        const data = response.data;
+        alert(data.message);
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
+  };
 
   return (
     <>
@@ -146,4 +144,4 @@ function Signup() {
   );
 }
 
-export default Signup
+export default Signup;

@@ -4,6 +4,7 @@ import {uploadOnCloudinary} from "../Utils/cloudnary.js"
 import generateToken from "../config/GenerateToken.js";
 
 const signUpUser = asyncHandler(async (req, res) => { 
+  console.log(req.body) ;
   //get user details from client
   const { name, email, password, confirmPassword } = req.body;
 
@@ -33,6 +34,7 @@ const signUpUser = asyncHandler(async (req, res) => {
   //   throw new Error("image file is required");
   // }
   const pic = await uploadOnCloudinary(imageLocalPath);
+  console.log(pic);
 
   // create user object - create entry in db
   const user = await User.create({
