@@ -20,8 +20,26 @@ function Signup() {
         setUser({... user, [name]: value}) ;
     }
 
-    const postData = async () => {
-      
+    const postData = async (event) => {
+      event.preventDefault() ;
+
+      const {name, email, password, confirmPassword, pic} = user ;
+
+      axios
+        .post("/api/v1/users/", {
+          name,
+          email,
+          password,
+          confirmPassword,
+          pic
+        })
+        .then((response) => {
+          const data = response.data ;
+          alert(data.message) ;
+        })
+        .catch((error) => {
+          window.alert(error.message)
+        });
     }
 
   return (
