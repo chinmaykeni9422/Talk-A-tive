@@ -2,59 +2,70 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function Signup() {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    pic: "",
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [pic, setPic] = useState(null);
 
-  let name, value;
+  const postDetails = (pics) => {
+    if (pics === undefined) {
+      alert("Please select an image");
+      return;
+    }
 
-  const handleInput = (event) => {
-    name = event.target.name;
-    value = event.target.value;
-
-    setUser({ ...user, [name]: value });
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      setPic(pics);
+    } else {
+      alert("Please select a valid image type (jpeg or png)");
+    }
   };
 
   const postData = async (event) => {
     event.preventDefault();
-    const { name, email, password, confirmPassword, pic } = user;
 
-    axios
-      .post("/api/v1/users/", {
-        name,
-        email,
-        password,
-        confirmPassword,
-        pic,
-      })
-      .then((response) => {
-        const data = response.data;
-        alert(data.message);
-      })
-      .catch((error) => {
-        window.alert(error.message);
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Please fill all the fields");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("confirmPassword", confirmPassword);
+    if (pic) {
+      formData.append("pic", pic);
+    }
+
+    try {
+      const response = await axios.post("/api/v1/users/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+      console.log(response) ;
+      // alert(response.data.message);
+      alert("User registered") ;
+    } catch (error) {
+      window.alert(error.response?.data?.message || error.message);
+    }
   };
 
   return (
     <>
-      <form method="POST" className="space-y-4 md:space-y-6">
+      <form method="POST" className="space-y-4 md:space-y-6" encType="multipart/form-data">
         <div className="flex flex-col items-start">
-          <label
-            htmlFor="name"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Name :
-          </label>
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name :</label>
           <input
             type="text"
-            onChange={handleInput}
-            value={user.name}
-            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Enter your name"
             required=""
@@ -62,17 +73,11 @@ function Signup() {
         </div>
 
         <div className="flex flex-col items-start">
-          <label
-            htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Email :
-          </label>
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email :</label>
           <input
             type="email"
-            onChange={handleInput}
-            value={user.email}
-            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Enter your email"
             required=""
@@ -80,17 +85,11 @@ function Signup() {
         </div>
 
         <div className="flex flex-col items-start">
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            password :
-          </label>
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password :</label>
           <input
             type="password"
-            onChange={handleInput}
-            value={user.password}
-            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Enter your password"
             required=""
@@ -98,35 +97,22 @@ function Signup() {
         </div>
 
         <div className="flex flex-col items-start">
-          <label
-            htmlFor="confirmPassword"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Conform Password :
-          </label>
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password :</label>
           <input
             type="password"
-            onChange={handleInput}
-            value={user.confirmPassword}
-            name="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="confirm your password"
+            placeholder="Confirm your password"
             required=""
           />
         </div>
 
         <div className="flex flex-col items-start">
-          <label
-            htmlFor="pic"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Upload Your Image :
-          </label>
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Your Image :</label>
           <input
             type="file"
-            onChange={handleInput}
-            value={user.pic}
-            name="pic"
+            onChange={(e) => postDetails(e.target.files[0])}
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required=""
           />
@@ -145,3 +131,4 @@ function Signup() {
 }
 
 export default Signup;
+
