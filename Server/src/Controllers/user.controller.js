@@ -4,8 +4,8 @@ import {uploadOnCloudinary} from "../Utils/cloudnary.js"
 import generateToken from "../config/GenerateToken.js";
 
 const signUpUser = asyncHandler(async (req, res) => { 
-  console.log("Request Body:", req.body);
-  console.log("Uploaded File:", req.file);
+  // console.log("Request Body:", req.body);
+  // console.log("Uploaded File:", req.file);
   //get user details from client
   const { name, email, password, confirmPassword } = req.body;
 
