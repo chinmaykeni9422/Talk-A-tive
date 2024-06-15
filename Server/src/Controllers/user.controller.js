@@ -5,7 +5,7 @@ import generateToken from "../config/GenerateToken.js";
 
 const signUpUser = asyncHandler(async (req, res) => { 
   console.log(req.body) ;
-  console.log(req.files)
+  // console.log(req.files)
   //get user details from client
   const { name, email, password, confirmPassword } = req.body;
 
