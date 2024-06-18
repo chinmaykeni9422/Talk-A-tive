@@ -25,6 +25,7 @@ import userRouter from "./Routes/user.routes.js";
 
 // routes declaration
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/chats", chatRouter);
 
 // error handlings
 app.use(notFound) ;
