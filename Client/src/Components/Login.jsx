@@ -1,14 +1,43 @@
 import React, {useState} from 'react'
+import axios from "axios" ;
+import {useNavigate} from 'react-router-dom'
 
 function Login() {
+
+  const navigate = useNavigate();
 
   const[email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginUser = () => {
+  console.log(email)
+  console.log(password)
 
+
+  const loginUser = async (event) => {
+    event.preventDefault() ;
+
+    if(!email || !password){
+      alert("Please Fill all the Fields")
+    }
+
+    axios.post("/api/v1/users/login",{
+      email, 
+      password
+    })
+    .then((response) => {
+      const data = response.data ;
+      alert(`${data.name} Login Succesfull`) ;
+      console.log(data) ;
+      navigate("/") ;
+    })
+    .catch((error) => {
+      if(error.response){
+        window.alert(error.message)
+      }
+    })
   }
-
+  
+  
   return (
     <>
       <form method="POST" className="space-y-4 md:space-y-6">
