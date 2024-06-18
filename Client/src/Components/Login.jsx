@@ -16,9 +16,9 @@ function Login() {
   const loginUser = async (event) => {
     event.preventDefault() ;
 
-    if(!email || !password){
-      alert("Please Fill all the Fields")
-    }
+    // if(!email || !password){
+    //   alert("Please Fill all the Fields")
+    // }
 
     axios.post("/api/v1/users/login",{
       email, 
