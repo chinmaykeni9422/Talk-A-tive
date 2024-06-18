@@ -22,6 +22,7 @@ app.use(express.static("public")) ;
 
 //routes imports
 import userRouter from "./Routes/user.routes.js";
+import chatRouter from "./Routes/chat.routes.js";
 
 // routes declaration
 app.use("/api/v1/users", userRouter);
