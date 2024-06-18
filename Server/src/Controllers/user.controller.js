@@ -84,7 +84,6 @@ const logInUser = asyncHandler( async (req, res) => {
   }
 });
 
-
 // we are using querries eg: /api/a1/users/search=chinmay
 const allUsers = asyncHandler ( async (req, res) => {
   const keyword = req.query.search ? {
