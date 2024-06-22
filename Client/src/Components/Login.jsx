@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import axios from "axios" ;
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom' ;
 
 function Login() {
 
@@ -8,10 +8,6 @@ function Login() {
 
   const[email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  console.log(email)
-  console.log(password)
-
 
   const loginUser = async (event) => {
     event.preventDefault() ;
@@ -28,6 +24,7 @@ function Login() {
       const data = response.data ;
       alert(`${data.name} Login Succesfull`) ;
       console.log(data) ;
+      localStorage.setItem("userInfo", JSON.stringify(data));
       navigate("/Chats") ;
     })
     .catch((error) => {

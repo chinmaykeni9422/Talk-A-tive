@@ -1,21 +1,23 @@
 import { useContext, useEffect, useState, createContext } from "react";
-import {useNavigate} from 'react-router-dom'
+// import {useNavigate} from 'react-router-dom'
 
 const chatContext = createContext() ;
 
-const chatProvider = ({children}) => {
+export const ChatProvider = ({children}) => {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [user, setUser] = useState(null) ;
     useEffect(() => {
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
         setUser(userInfo) ;
+        console.log(userInfo) ;
 
         if(!userInfo){
-            navigate("/") ;
+            // navigate("/") ;
+            Console.log("user os not found") ;
         }
-    }, [navigate])
+    }, [])
 
     return (
         <chatContext.Provider
@@ -33,4 +35,3 @@ export const chatState = () => {
     return useContext(chatContext) ;
 }
 
-export default chatProvider ;

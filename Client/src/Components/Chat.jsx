@@ -1,25 +1,31 @@
-import axios from "axios" ;
-import { useEffect, useState } from "react";
+import React from "react";
+import { chatState } from "../Context/chatContext.jsx";
+import SideDrawer from "../Miscellaneous/SideDrawer.jsx" ;
+import MyChats from "../Miscellaneous/MyChats.jsx" ;
+import MyBox from "../Miscellaneous/MyBox.jsx"
 
 function Chat() {
 
-  const [chats, setChats] = useState([])
-
-  const Chat = async () => {
-    const {data} = await axios.get("/api/v1/users/chats");
-    setChats(data) ;
-  }
-
-  useEffect(() => {
-    Chat() ;
-  }, [])
+  const {user} = chatState() ;
 
   return (
     <>
-      <div>
-        {chats.map((item) => (
-          <div key={item._id}>{item.chatName}</div>
-        ))}
+      <div className="w-ful">
+
+        {user && <SideDrawer/>}
+
+        <div className="flex space-between w-[100%] h-[91.5vh] p-10 ">
+
+          <div className="flex-auto">
+            {user && <MyChats/>}
+          </div>
+
+          <div className="flex-auto">
+            {user && <MyBox/>}
+          </div>
+
+        </div>
+
       </div>
     </>
   );
