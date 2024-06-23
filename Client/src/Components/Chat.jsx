@@ -14,7 +14,7 @@ function Chat() {
 
         {user && <SideDrawer/>}
 
-        <div className="flex space-between w-[100%] h-[91.5vh] p-10 ">
+        <div className="flex space-between w-[100%] h-[87.5vh] p-1 ">
 
           <div className="flex-auto">
             {user && <MyChats/>}
