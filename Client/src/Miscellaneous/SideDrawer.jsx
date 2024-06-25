@@ -61,7 +61,7 @@ const SideDrawer = () => {
 
                 <menu>
                     <button onClick={() => setShow(!show)} className="flex cursor-pointer items-center justify-center p-2 rounded-md hover:bg-blue-100">
-                        <img class="w-12 h-12 rounded-full mr-2 p-1" src={`${user.pic ? user.pic : "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"}  `} alt="Rounded avatar"/>  
+                        <img className="w-12 h-12 rounded-full mr-2 p-1" src={`${user.pic ? user.pic : "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"}  `} alt="Rounded avatar"/>  
                         {show? <FontAwesomeIcon icon={faChevronUp}/>:<FontAwesomeIcon icon={faChevronDown}/>}
                     </button>
 

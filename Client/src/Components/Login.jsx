@@ -23,7 +23,6 @@ function Login() {
     .then((response) => {
       const data = response.data ;
       alert(`${data.name} Login Succesfull`) ;
-      console.log(data) ;
       localStorage.setItem("userInfo", JSON.stringify(data));
       navigate("/Chats") ;
     })

@@ -13,7 +13,7 @@ const ProfileModal = ({ user, onClose }) => {
                     </div>
 
                     <div>
-                        <img class="w-64 h-64 rounded-full mr-2 p-1" src={`${user.pic ? user.pic : "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"}  `} alt="Rounded avatar"/>
+                        <img className="w-64 h-64 rounded-full mr-2 p-1" src={`${user.pic ? user.pic : "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"}  `} alt="Rounded avatar"/>
                     </div>
 
                     <div className="mt-4 mb-4">
