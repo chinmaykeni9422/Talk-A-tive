@@ -40,6 +40,12 @@ const SideDrawer = () => {
         navigate("/") ;
     }
 
+    const handleSearch = () => {
+        if(!search){
+            alert("Please Enter Something in Search") ;
+        }
+    }
+
     return(
         <>
 
@@ -95,7 +101,13 @@ const SideDrawer = () => {
 
         </div>
 
-        <Drawer isOpenDrawer={isOpenDrawer} toggle={toggleDrawer}/>
+        <Drawer 
+            isOpenDrawer={isOpenDrawer} 
+            toggle={toggleDrawer}
+            search={search}
+            setSearch={setSearch}
+            handleSearch={handleSearch}
+        />
         </>
     )
 }
