@@ -40,7 +40,8 @@ const SideDrawer = () => {
         localStorage.removeItem("userInfo") ;
         navigate("/") ;
     }
-
+ 
+    // search handler
     const handleSearch = async () => {
         if(!search){
             alert("Please Enter Something in Search") ;
@@ -62,6 +63,11 @@ const SideDrawer = () => {
         } catch (error) {
             alert("Failed to load the Search Results")
         }
+    }
+
+    // acces chat 
+    const accesChat = (userId) => {
+
     }
 
     return(
@@ -127,6 +133,7 @@ const SideDrawer = () => {
             handleSearch={handleSearch}
             loading={loading}
             searchResult={searchResult}
+            accesChat={accesChat}
         />
         </>
     )

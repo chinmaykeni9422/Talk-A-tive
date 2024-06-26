@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome" ;
 import {faXmark} from "@fortawesome/free-solid-svg-icons"
 import ChatLoading from './ChatLoading';
+import UserListItem from './UserListItem';
 
 const Drawer = ({
     isOpenDrawer, 
@@ -10,7 +11,8 @@ const Drawer = ({
     setSearch,
     handleSearch,
     loading,
-    searchResult
+    searchResult,
+    accesChat
     }) => {
 
     return(
@@ -51,7 +53,13 @@ const Drawer = ({
                         loading ? (
                             <ChatLoading/>
                         ) : (
-                            <span>result</span>
+                            searchResult?.map( user => (
+                                <UserListItem 
+                                    key={user._id}
+                                    user={user}
+                                    handleFunction={() => accesChat(user._id)}
+                                />
+                            ))
                         )
                     }
 
