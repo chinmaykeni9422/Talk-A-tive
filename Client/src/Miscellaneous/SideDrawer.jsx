@@ -4,6 +4,7 @@ import {faMagnifyingGlass, faBell, faChevronDown, faChevronUp} from "@fortawesom
 import { chatState } from "../Context/chatContext";
 import ProfileModal from "./ProfileModal";
 import {useNavigate} from "react-router-dom" ;
+import Drawer from "./Drawer";
 
 const SideDrawer = () => {
 
@@ -15,8 +16,11 @@ const SideDrawer = () => {
     const [searchResult, setSearchResult] = useState([]) ;
     const [loading, setLoading] = useState(false) ;
     const [loadingChat, setLoadingChat] = useState(  ) ;
+
+    // to open close profile and logout button
     const [show, setShow] = useState(false) ;
 
+    // model open close functionality
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => {
         setIsModalOpen(true);
@@ -24,6 +28,13 @@ const SideDrawer = () => {
     }
     const closeModal = () => setIsModalOpen(false);
 
+    //to open close left drawer component
+    const [isOpenDrawer, setIsOpenDrawer] = useState(false) ;
+    const toggleDrawer = () => {
+        setIsOpenDrawer(!isOpenDrawer) ;
+    }
+
+    // log out handler
     const logoutHandler = () => {
         localStorage.removeItem("userInfo") ;
         navigate("/") ;
@@ -42,8 +53,8 @@ const SideDrawer = () => {
         <div className="flex justify-between items-center bg-white w-[100%] px-5 pt-2 pb-2 border-4">
 
             <div>
-                <button className="bg-blue-100 p-2 hover:bg-blue-200 rounded-md" title="Search Users To Chat">
-                <FontAwesomeIcon icon={faMagnifyingGlass}/>  <span className="hidden sm:inline">Search User</span>
+                <button onClick={toggleDrawer} className="bg-blue-100 p-2 hover:bg-blue-200 rounded-md" title="Search Users To Chat">
+                    <FontAwesomeIcon icon={faMagnifyingGlass}/>  <span className="hidden sm:inline">Search User</span>
                 </button>
             </div>
 
@@ -83,6 +94,8 @@ const SideDrawer = () => {
             </div>
 
         </div>
+
+        <Drawer isOpenDrawer={isOpenDrawer} toggle={toggleDrawer}/>
         </>
     )
 }
