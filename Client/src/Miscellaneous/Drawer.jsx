@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome" ;
 import {faXmark} from "@fortawesome/free-solid-svg-icons"
+import ChatLoading from './ChatLoading';
 
 const Drawer = ({
     isOpenDrawer, 
     toggle, 
     search, 
     setSearch,
-    handleSearch
+    handleSearch,
+    loading,
+    searchResult
     }) => {
 
     return(
@@ -43,6 +46,14 @@ const Drawer = ({
                                 Go
                             </button>
                     </div>
+
+                    {
+                        loading ? (
+                            <ChatLoading/>
+                        ) : (
+                            <span>result</span>
+                        )
+                    }
 
                 </div>
 

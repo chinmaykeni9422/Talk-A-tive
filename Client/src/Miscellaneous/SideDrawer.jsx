@@ -5,6 +5,7 @@ import { chatState } from "../Context/chatContext";
 import ProfileModal from "./ProfileModal";
 import {useNavigate} from "react-router-dom" ;
 import Drawer from "./Drawer";
+import axios from "axios"
 
 const SideDrawer = () => {
 
@@ -40,9 +41,26 @@ const SideDrawer = () => {
         navigate("/") ;
     }
 
-    const handleSearch = () => {
+    const handleSearch = async () => {
         if(!search){
             alert("Please Enter Something in Search") ;
+        }
+
+        try {
+            setLoading(true) ;
+
+            const config = {
+                headers: {
+                    Authorization : `Bearer ${user.token}`
+                }
+            } ;
+
+            const {data} = await axios.get(`/api/v1/users/?search=${search}`, config) ; 
+
+            setLoading(false) ;
+            setSearchResult(data) ;
+        } catch (error) {
+            alert("Failed to load the Search Results")
         }
     }
 
@@ -107,6 +125,8 @@ const SideDrawer = () => {
             search={search}
             setSearch={setSearch}
             handleSearch={handleSearch}
+            loading={loading}
+            searchResult={searchResult}
         />
         </>
     )
