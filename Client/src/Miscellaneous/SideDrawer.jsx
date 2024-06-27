@@ -6,13 +6,14 @@ import ProfileModal from "./ProfileModal";
 import {useNavigate} from "react-router-dom" ;
 import Drawer from "./Drawer";
 import axios from "axios"
+import ChatLoading from "./ChatLoading";
 
 const SideDrawer = () => {
 
     const navigate = useNavigate() ;
 
-    const {user} = chatState() ;
- 
+    const {user, setSelectedChat, chats, setChats} = chatState() ;
+
     const [search, setSearch] = useState("") ;
     const [searchResult, setSearchResult] = useState([]) ;
     const [loading, setLoading] = useState(false) ;
@@ -45,6 +46,7 @@ const SideDrawer = () => {
     const handleSearch = async () => {
         if(!search){
             alert("Please Enter Something in Search") ;
+            return ;
         }
 
         try {
@@ -56,9 +58,12 @@ const SideDrawer = () => {
                 }
             } ;
 
-            const {data} = await axios.get(`/api/v1/users/?search=${search}`, config) ; 
+            const {data} = await axios.get(`/api/v1/users?search=${search}`, config) ; 
+            console.log(data) ;
+            setTimeout(() => {
+                setLoading(false) ;
+            }, 1000); // Simulating loading time
 
-            setLoading(false) ;
             setSearchResult(data) ;
         } catch (error) {
             alert("Failed to load the Search Results")
@@ -66,8 +71,22 @@ const SideDrawer = () => {
     }
 
     // acces chat 
-    const accesChat = (userId) => {
+    const accesChat = async (userId) => {
+        try {
+            setLoadingChat(true) ;
 
+            const config = {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${user.token}`
+            } ;
+
+            const {data} = await axios.post("/api/v1/users/chats/", {userId}, config) ;
+            setSelectedChat(data) ;
+            setLoading(false) ;
+            onclose() ;
+        } catch (error) {
+            alert("Error fetching the chat") ;
+        }
     }
 
     return(
