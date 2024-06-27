@@ -9,7 +9,7 @@ export const ChatProvider = ({children}) => {
 
     const [user, setUser] = useState(null) ;
     const [selectedChat, setSelectedChat] = useState() ;
-    const [chats, setChats] = useState() ;
+    const [chats, setChats] = useState([]) ;
 
     useEffect(() => {
 

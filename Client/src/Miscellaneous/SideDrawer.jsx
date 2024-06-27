@@ -76,14 +76,17 @@ const SideDrawer = () => {
             setLoadingChat(true) ;
 
             const config = {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${user.token}`
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${user.token}`,
+                }
             } ;
 
-            const {data} = await axios.post("/api/v1/users/chats/", {userId}, config) ;
+            const {data} = await axios.post("/api/v1/chats/", {userId}, config) 
+            if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+
             setSelectedChat(data) ;
             setLoading(false) ;
-            onclose() ;
         } catch (error) {
             alert("Error fetching the chat") ;
         }
