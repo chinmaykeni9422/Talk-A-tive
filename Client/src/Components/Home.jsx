@@ -8,8 +8,6 @@ function Home() {
 
   const navigate = useNavigate();
 
-  console.log("working")
-
   const {user} = chatState() ;
 
   useEffect(() => {

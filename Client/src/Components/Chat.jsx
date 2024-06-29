@@ -1,29 +1,29 @@
 import React from "react";
 import { chatState } from "../Context/chatContext.jsx";
-import SideDrawer from "../Miscellaneous/SideDrawer.jsx" ;
-import MyChats from "../Miscellaneous/MyChats.jsx" ;
+import SideDrawer from "../Miscellaneous/SideDrawer.jsx";
+import MyChats from "../Miscellaneous/MyChats.jsx";
 import MyBox from "../Miscellaneous/MyBox.jsx"
 
 function Chat() {
 
-  const {user} = chatState() ;
+  const { user } = chatState();
 
   return (
     <>
-      <div className="w-ful">
+      <div className="w-full">
 
-        {user && <SideDrawer/>}
+        {user && <SideDrawer />}
 
-        <div className="flex space-between w-[100%] h-[87.5vh] p-1 ">
+        <div className="flex w-full h-[90.5vh] p-2">
 
-          <div className="flex-auto">
-            {user && <MyChats/>}
+          <div className="mr-2 flex-[4]">
+            {user && <MyChats />}
           </div>
 
-          <div className="flex-auto">
-            {user && <MyBox/>}
+          <div className="bg-blue-300 flex-[6]">
+            {user && <MyBox />}
           </div>
-
+          
         </div>
 
       </div>

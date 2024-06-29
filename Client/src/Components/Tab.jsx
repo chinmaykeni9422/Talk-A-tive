@@ -55,7 +55,7 @@ const Tabs = () => {
                 </div>
 
                 <div className={openTab === 2 ? "block" : "hidden"}>
-                  <Signup f />
+                  <Signup />
                 </div>
               </div>
             </div>
