@@ -4,7 +4,7 @@ const UserListItem = ({ user, handleFunction }) => {
   return (
     <div
       className="flex items-center p-4 bg-gray-700 hover:bg-gray-600 rounded-md cursor-pointer transition duration-150 ease-in-out m-2"
-      onClick={() => handleFunction(user)}
+      onClick={() => handleFunction(user._id)}
     >
       <img
         src={user.pic ? user.pic : 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'}

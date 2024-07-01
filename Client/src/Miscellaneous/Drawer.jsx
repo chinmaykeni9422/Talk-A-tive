@@ -53,13 +53,15 @@ const Drawer = ({
                         loading ? (
                             <ChatLoading/>
                         ) : (
-                            searchResult?.map( user => (
-                                <UserListItem 
+                            <div className="divide-y divide-gray-200">
+                                {searchResult?.map((user) => (
+                                <UserListItem
                                     key={user._id}
                                     user={user}
-                                    handleFunction={() => accesChat(user._id)}
+                                    handleFunction={accesChat} // Pass accesChat function
                                 />
-                            ))
+                                ))}
+                            </div>
                         )
                     }
 
@@ -67,7 +69,8 @@ const Drawer = ({
 
                 {isOpenDrawer && (
                     <div
-                    className="fixed z-30 inset-0 text-white bg-black opacity-50"
+                        className="fixed z-30 inset-0 text-white bg-black opacity-50"
+                        onClick={toggle}
                     >
                     </div>
                 )}
