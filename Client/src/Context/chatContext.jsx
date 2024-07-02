@@ -7,9 +7,9 @@ export const ChatProvider = ({children}) => {
 
     const navigate = useNavigate();
 
-    const [user, setUser] = useState(null) ;
+    const [user, setUser] = useState() ;
     const [selectedChat, setSelectedChat] = useState() ;
-    const [chats, setChats] = useState([]) ;
+    const [chats, setChats] = useState() ;
 
     useEffect(() => {
 
