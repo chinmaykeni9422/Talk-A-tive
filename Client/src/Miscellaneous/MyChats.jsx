@@ -5,10 +5,16 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import ChatLoading from "./ChatLoading";
 import { getSender } from "../config/ChatLogics";
+import AddGroupModal from "./AddGroupModal" ;
 
 const MyChats = () => {
     const [loggedUser, setLoggedUser] = useState(null); // Initialize as null
     const { selectedChat, setSelectedChat, user, chats, setChats } = chatState();
+
+    //add group modal
+    const [addGroupModal, setAddGroupMoadl] = useState(false) ;
+    const openGroupAddModal = () => setAddGroupMoadl(true) ;
+    const closeGroupAddModal = () => setAddGroupMoadl(false) ;
 
     const fetchChats = async () => {
         try {
@@ -37,10 +43,19 @@ const MyChats = () => {
 
     return (
         <>
+
+            {
+                addGroupModal && (
+                    <AddGroupModal
+                        closeFunc={closeGroupAddModal}
+                    />
+                )
+            }
+
             <div className="bg-blue-100 border-2 rounded-lg h-[838px]">
                 <div className="pb-3 text-4xl px-3 pt-3 font-sans flex w-[100%] justify-between items-center">
                     My Chats
-                    <button className=" bg-blue-400 text-2xl hover:bg-blue-300 p-2">
+                    <button onClick={openGroupAddModal} className=" bg-blue-400 text-2xl hover:bg-blue-300 p-2">
                         New Group Chat <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>
