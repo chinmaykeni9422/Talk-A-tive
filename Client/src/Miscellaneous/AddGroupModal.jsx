@@ -1,52 +1,78 @@
 import React, { useState } from 'react'
 import { chatState } from '../Context/chatContext';
-import axios from "axios" ;
+import axios from "axios";
 import UserListItem from "./UserListItem"
 import UserBadgeItem from "./UserBadgeItem "
 
 function AddGroupModal({ closeFunc }) {
 
-    const [groupChatName, setGroupChatName] = useState("") ;
-    const [selectedUser, setSelectedUser] = useState([]) ;
-    const [search, setSearch] = useState("") ;
-    const [searchResult, setSearchResult] = useState([]) ;
-    const [loading, setLoading] = useState(false) ;
+    const [groupChatName, setGroupChatName] = useState("");
+    const [selectedUser, setSelectedUser] = useState([]);
+    const [search, setSearch] = useState("");
+    const [searchResult, setSearchResult] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const { user, chats, setChats } = chatState() ;
+    const { user, chats, setChats } = chatState();
 
     //function
     const handleSearch = async (query) => {
-        setSearch(query) ;
+        setSearch(query);
 
-        if(!query){
-            return ;
+        if (!query) {
+            return;
         }
 
         try {
-            setLoading(true) ;
+            setLoading(true);
 
             const config = {
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 }
-            } ;
+            };
 
-            const {data} = await axios.get(`/api/v1/users?search=${search}`, config) ;
+            const { data } = await axios.get(`/api/v1/users?search=${search}`, config);
 
-            setLoading(false) ;
+            setLoading(false);
 
-            setSearchResult(data) ;
+            setSearchResult(data);
         } catch (error) {
-            alert("Failed to load the search result") ;
+            alert("Failed to load the search result");
         }
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        if(!groupChatName || !selectedUser){
+            alert("Please fill all the feilds") ;
+            return ;
+        }
 
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}` 
+                }
+            }
+
+            const {data} = await axios.post(
+                "/api/v1/chats/group",
+                {
+                    name: groupChatName,
+                    users: JSON.stringify(selectedUser.map((u) => u._id))
+                },
+                config
+            ) ;
+
+            setChats([data, ...chats]) ;
+            closeFunc();
+            alert("New Group Chat Created")
+        } catch (error) {
+            alert("Failed to Create the Chat") ;
+        }
     }
 
     const handleGroup = (user) => {
-        if (selectedUser.includes(user)){
+        if (selectedUser.includes(user)) {
             alert("User already added")
             return;
         }
@@ -54,8 +80,8 @@ function AddGroupModal({ closeFunc }) {
         setSelectedUser([...selectedUser, user]);
     };
 
-    const handleDelete = () => {
-
+    const handleDelete = (delUser) => {
+        setSelectedUser(selectedUser.filter((sel) => sel._id !== delUser._id));
     }
 
     return (
@@ -83,27 +109,29 @@ function AddGroupModal({ closeFunc }) {
                         />
                     </div>
 
-                    {
-                        selectedUser.map((u) => (
-                            <UserBadgeItem 
-                                key={user._id}
+                    <div className="flex flex-wrap mb-4">
+                        {selectedUser.map((u) => (
+                            <UserBadgeItem
+                                key={u._id}
                                 user={u}
                                 handleFunction={() => handleDelete(u)}
                             />
-                        ))
-                    }
+                        ))}
+                    </div>
 
-                    {loading ? <div>Loading..</div> :(
-                        searchResult?.slice(0, 4).map(user => (
-                            <div className='w-full'>
+                    <div className="w-full h-48 overflow-y-auto">
+                        {loading ? (
+                            <div>Loading...</div>
+                        ) : (
+                            searchResult?.slice(0, 4).map((user) => (
                                 <UserListItem
                                     key={user._id}
                                     user={user}
                                     handleFunction={() => handleGroup(user)}
                                 />
-                            </div>
-                        ))
-                    )}
+                            ))
+                        )}
+                    </div>
 
                     <div className="flex justify-end w-full mt-4">
                         <button onClick={closeFunc} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2">Close</button>

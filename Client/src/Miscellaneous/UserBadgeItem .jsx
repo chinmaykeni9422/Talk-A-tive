@@ -6,9 +6,9 @@ function UserBadgeItem ({user, handleFunction}) {
   return (
     <>
       
-      <div onClick={handleFunction} className='px-2 py-1 rounded-lg m-1 mb-1 bg-blue-500 text-white font-bold text-sm cursor-pointer '>
+      <div className='px-2 py-1 rounded-lg m-1 mb-1 bg-blue-500 text-white font-bold text-sm cursor-pointer '>
         {user.name}
-        <FontAwesomeIcon className='pl-1' icon={faXmark}/>
+        <FontAwesomeIcon onClick={handleFunction} className='pl-1' icon={faXmark}/>
       </div>
 
     </>
